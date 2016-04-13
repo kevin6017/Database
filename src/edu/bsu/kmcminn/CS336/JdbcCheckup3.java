@@ -43,10 +43,10 @@ class JdbcCheckup3
 
     // Do the SQL
     ResultSet rset = stmt.executeQuery (queryText);
-    results = "Plane Table \n";
+    results = "Table \n";
     results += "--------------------------------------------------------------------------- \n";
     
-    System.out.println("Plane table:");
+    System.out.println("Table:");
     System.out.println("---------------------------------------------------------------------------");
     while (rset.next ()){
     	results += rset.getString (1) + " " + rset.getString(2)
