@@ -74,7 +74,9 @@ public class UI extends Application{
 	}
 	
 	public void makeSearchScene(){
-		choiceBox.getItems().addAll("Select pilots with hours between two bounds", "2", "3");
+		choiceBox.getItems().addAll("Select pilots with hours between two bounds", 
+				"Select Planes with Hobb's Times bettwen two bounds",
+				"3");
 		Label searchLabel = new Label ("Enter search query here:");
 		
 		HBox numberFields = new HBox(20);
@@ -114,7 +116,8 @@ public class UI extends Application{
 		String searchString = null;
 		if (choiceBox.getValue() == "Select pilots with hours between two bounds"){
 			searchString = "Select * from PILOT, FLOWN_BY WHERE PILOT.Pilot_ID = FLOWN_BY.Pilot_ID AND HOURS BETWEEN " + 
-					numberField1.getText() + " AND " + numberField2.getText() + ";";
+					numberField1.getText() + " AND " + numberField2.getText();
+			System.out.println(searchString);
 		
 		}
 		return searchString;

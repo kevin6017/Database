@@ -42,7 +42,7 @@ class JdbcCheckup3
     Statement stmt = conn.createStatement ();
 
     // Do the SQL
-    ResultSet rset = stmt.executeQuery ("Select * from PILOT, FLOWN_BY WHERE PILOT.Pilot_ID = FLOWN_BY.Pilot_ID AND HOURS BETWEEN 100 AND 500");
+    ResultSet rset = stmt.executeQuery (queryText);
     results = "Table \n";
     results += "--------------------------------------------------------------------------- \n";
     
