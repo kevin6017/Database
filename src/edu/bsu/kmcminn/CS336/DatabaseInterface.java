@@ -14,7 +14,7 @@ import java.io.*;
 
 //import oracle.jdbc.OracleDriver;
 
-class JdbcCheckup3
+class DatabaseInterface
 {
   public static String searchDB(String searchText)
        throws SQLException, IOException

@@ -63,7 +63,6 @@ public class UI extends Application{
 			try {
 				searchDatabase();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			window.setScene(displayScene);
@@ -104,7 +103,7 @@ public class UI extends Application{
 	}
 	
 	private void searchDatabase() throws SQLException, IOException{
-		JdbcCheckup3 dataBase = new JdbcCheckup3();
+		DatabaseInterface dataBase = new DatabaseInterface();
 		String searchString = createSearchString();
 		String results = dataBase.searchDB(searchString);
 		databaseDisplayText.setText(results);
