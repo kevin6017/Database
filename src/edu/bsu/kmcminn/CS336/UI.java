@@ -34,7 +34,7 @@ public class UI extends Application{
 	private TextField numberField2 = new TextField();
 	private Text databaseDisplayText = new Text();
 	
-	ComboBox choiceBox = new ComboBox();
+	ComboBox<String> choiceBox = new ComboBox<String>();
 	
 	
 	@Override
