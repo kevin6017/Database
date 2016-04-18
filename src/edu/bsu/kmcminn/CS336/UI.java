@@ -73,13 +73,14 @@ public class UI extends Application {
 		goBackButton.setOnAction(e -> window.setScene(searchScene));
 
 	}
-	
-	public void makeSearchScene(){
-		choiceBox.getItems().addAll("Select pilots with hours between two bounds", 
+
+	public void makeSearchScene() {
+		choiceBox.getItems().addAll(
+				"Select pilots with hours between two bounds",
 				"Select Planes with Hobb's Times bettwen two bounds",
 				"Select Pilot with the most hours");
-		Label searchLabel = new Label ("Enter search query here:");
-		
+		Label searchLabel = new Label("Enter search query here:");
+
 		HBox numberFields = new HBox(20);
 		numberFields.getChildren().addAll(numberField1, numberField2);
 		numberFields.setAlignment(Pos.CENTER);
@@ -92,7 +93,8 @@ public class UI extends Application {
 
 		VBox layout1 = new VBox(20);
 		layout1.setAlignment(Pos.CENTER);
-		layout1.getChildren().addAll(searchLabel, choiceBox, boundLabels, numberFields, searchButton);
+		layout1.getChildren().addAll(searchLabel, choiceBox, boundLabels,
+				numberFields, searchButton);
 		searchScene = new Scene(layout1, 600, 600);
 	}
 
@@ -123,9 +125,8 @@ public class UI extends Application {
 			searchString = "Select * from PLANE WHERE HOBBS_TIME BETWEEN " +numberField1.getText() + " AND "+ numberField2.getText();
 		}
 		if (choiceBox.getValue() == "Select Pilot with the most hours"){
-			searchString = "Select * " +numberField1.getText() + " AND "+ numberField2.getText();
+			searchString = "SELECT * FROM PILOT, FLOWN_BY WHERE PILOT.PILOT_ID = FLOWN_BY.PILOT_ID AND HOURS IN	(SELECT MAX(HOURS)FROM FLOWN_BY)";
 		}
 		return searchString;
 	}
-
 }
