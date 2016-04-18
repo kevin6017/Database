@@ -27,18 +27,24 @@ class DatabaseInterface {
 		Statement stmt = conn.createStatement();
 
 		// Do the SQL
-		ResultSet rset = stmt.executeQuery(
-				"Select * from PILOT, FLOWN_BY WHERE PILOT.Pilot_ID = FLOWN_BY.Pilot_ID AND HOURS BETWEEN 100 AND 500");
+		ResultSet rset = stmt.executeQuery(queryText);
+		ResultSetMetaData rsetmd = rset.getMetaData();
+		int columNumber = rsetmd.getColumnCount();
 		results = "Table \n";
 		results += "--------------------------------------------------------------------------- \n";
 
 		System.out.println("Table:");
 		System.out.println("---------------------------------------------------------------------------");
 		while (rset.next()) {
-			results += rset.getString(1) + " " + rset.getString(2) + " " + rset.getString(3) + " " + rset.getString(4)
-					+ " " + rset.getString(5) + " " + rset.getString(6) + "\n";
-			System.out.println(rset.getString(1) + " " + rset.getString(2) + " " + rset.getString(3) + " "
-					+ rset.getString(4) + " " + rset.getString(5) + " " + rset.getString(6));
+			int i = 1; 
+			while(i <= columNumber){
+			results += rset.getString(i) + " ";
+					//+ " " + rset.getString(2) + " " + rset.getString(3) + " " + rset.getString(4)
+					//+ " " + rset.getString(5) + " " + rset.getString(6) + "\n";
+			System.out.println(rset.getString(i));
+			i++;
+			}
+			results += "\n";
 		}
 		rset.close();
 		stmt.close();

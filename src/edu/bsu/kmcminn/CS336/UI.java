@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -75,7 +76,7 @@ public class UI extends Application{
 	public void makeSearchScene(){
 		choiceBox.getItems().addAll("Select pilots with hours between two bounds", 
 				"Select Planes with Hobb's Times bettwen two bounds",
-				"3");
+				"Select Pilot with the most hours");
 		Label searchLabel = new Label ("Enter search query here:");
 		
 		HBox numberFields = new HBox(20);
@@ -98,7 +99,7 @@ public class UI extends Application{
 		Label displayLabel = new Label ("Results from database:");
 		ScrollPane scrollPane1 = new ScrollPane();
 		scrollPane1.setContent(databaseDisplayText);
-		scrollPane1.autosize();
+		scrollPane1.setHbarPolicy(ScrollBarPolicy.ALWAYS);
 		VBox layout2 = new VBox(20);
 		layout2.getChildren().addAll(displayLabel, scrollPane1, goBackButton);
 		displayScene = new Scene (layout2, 600, 600);		
@@ -116,8 +117,12 @@ public class UI extends Application{
 		if (choiceBox.getValue() == "Select pilots with hours between two bounds"){
 			searchString = "Select * from PILOT, FLOWN_BY WHERE PILOT.Pilot_ID = FLOWN_BY.Pilot_ID AND HOURS BETWEEN " + 
 					numberField1.getText() + " AND " + numberField2.getText();
-			System.out.println(searchString);
-		
+		}
+		if (choiceBox.getValue() == "Select Planes with Hobb's Times bettwen two bounds"){
+			searchString = "Select * from PLANE WHERE HOBBS_TIME BETWEEN " +numberField1.getText() + " AND "+ numberField2.getText();
+		}
+		if (choiceBox.getValue() == "Select Pilot with the most hours"){
+			searchString = "Select * " +numberField1.getText() + " AND "+ numberField2.getText();
 		}
 		return searchString;
 	}
