@@ -33,7 +33,6 @@ public class UI extends Application {
 
 	private Button searchButton = new Button("Search");
 	private Button goBackButton = new Button("Go Back");
-	// private TextField searchField = new TextField ();
 	private TextField numberField1 = new TextField();
 	private TextField numberField2 = new TextField();
 	private Text databaseDisplayText = new Text();
@@ -78,8 +77,15 @@ public class UI extends Application {
 		choiceBox.getItems().addAll(
 				"Select pilots with hours between two bounds",
 				"Select Planes with Hobb's Times bettwen two bounds",
-				"Select Pilot with the most hours");
-		Label searchLabel = new Label("Enter search query here:");
+				"Select Pilot with the most hours",
+				"Select Pilot with the least hours",
+				"Select current makes and models of aircraft in the hangar",
+				"Select all mechanics of a department number",
+				"Select all pilots born before a certain year",
+				"Show the mechanics and what planes they are assigned to",
+				"Display the average Hobb's time and amount of planes for each company",
+				"Select the plane with the highest Hobb's time");
+		Label searchLabel = new Label("Enter search query here: \n\n If the search asks for only one value, use the To: text box.");
 
 		HBox numberFields = new HBox(20);
 		numberFields.getChildren().addAll(numberField1, numberField2);
@@ -126,6 +132,27 @@ public class UI extends Application {
 		}
 		if (choiceBox.getValue() == "Select Pilot with the most hours"){
 			searchString = "SELECT * FROM PILOT, FLOWN_BY WHERE PILOT.PILOT_ID = FLOWN_BY.PILOT_ID AND HOURS IN	(SELECT MAX(HOURS)FROM FLOWN_BY)";
+		}
+		if (choiceBox.getValue() == "Select Pilot with the least hours"){
+			searchString = "SELECT * FROM PILOT, FLOWN_BY WHERE PILOT.PILOT_ID = FLOWN_BY.PILOT_ID AND HOURS IN	(SELECT MIN(HOURS)FROM FLOWN_BY)";
+		}
+		if (choiceBox.getValue() == "Select current makes and models of aircraft in the hangar"){
+			searchString = "SELECT TAIL_NO, P_MAKE, P_MODEL FROM PLANE";
+		}
+		if (choiceBox.getValue() == "Select all mechanics of a department number"){
+			searchString = "SELECT F_NAME, L_NAME, SSN FROM MECHANIC WHERE DEP_NUMBER = "+numberField2.getText() + " ORDER BY L_NAME ASC";
+		}
+		if (choiceBox.getValue() == "Select all pilots born before a certain year"){
+			searchString = "SELECT * FROM PILOT WHERE to_number(to_char(DOB, 'yyyy')) < " + numberField2.getText();
+		}
+		if (choiceBox.getValue() == "Show the mechanics and what planes they are assigned to"){
+			searchString = "SELECT M.F_NAME, M.L_NAME, P.TAIL_NO, P.P_MODEL FROM MECHANIC M, PLANE P, WORKS_ON W WHERE M.SSN = W.M_SSN AND P.TAIL_NO = W.TAIL_NO";
+		}
+		if (choiceBox.getValue() == "Display the average Hobb's time and amount of planes for each company"){
+			searchString = "SELECT C_NAME, AVG(HOBBS_TIME), COUNT(*) FROM PLANE GROUP BY C_NAME";
+		}
+		if (choiceBox.getValue() == "Select the plane with the highest Hobb's time"){
+			searchString = "SELECT * FROM PLANE WHERE HOBBS_TIME IN (SELECT MAX(HOBBS_TIME) FROM PLANE)";
 		}
 		return searchString;
 	}
