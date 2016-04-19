@@ -30,18 +30,21 @@ class DatabaseInterface {
 		ResultSet rset = stmt.executeQuery(queryText);
 		ResultSetMetaData rsetmd = rset.getMetaData();
 		int columNumber = rsetmd.getColumnCount();
-		results = "Table \n";
+		results = "Results:";
 		results += "--------------------------------------------------------------------------- \n";
 
 		System.out.println("Table:");
 		System.out.println("---------------------------------------------------------------------------");
+		int i = 1;
+		while (i <= columNumber){
+			results += rsetmd.getColumnLabel(i) + "  ";
+			i++;
+		}
+		results += "\n";
 		while (rset.next()) {
-			int i = 1; 
+			i = 1; 
 			while(i <= columNumber){
 			results += rset.getString(i) + " ";
-					//+ " " + rset.getString(2) + " " + rset.getString(3) + " " + rset.getString(4)
-					//+ " " + rset.getString(5) + " " + rset.getString(6) + "\n";
-			System.out.println(rset.getString(i));
 			i++;
 			}
 			results += "\n";
