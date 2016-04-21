@@ -39,23 +39,20 @@ class DatabaseInterface {
 		System.out
 				.println("---------------------------------------------------------------------------");
 		int i = 1;
-		while (i <= columNumber) {
-			results += rsetmd.getColumnLabel(i) + " \t\t";
-			i++;
-		}
 		results += "\n";
 		while (rset.next()) {
 			i = 1;
 			while (i <= columNumber) {
+				results += rsetmd.getColumnLabel(i) + ":      ";
 				if (rsetmd.getColumnType(i) == Types.TIMESTAMP) {
-					results += rset.getDate(i)+ "\t\t";
+					results += rset.getDate(i) + "\n";
 					i++;
 				} else {
-					results += rset.getString(i) + "\t\t";
+					results += rset.getString(i) + "\n";
 					i++;
 				}
 			}
-			results += "\n";
+			results += "\n\n";
 		}
 		rset.close();
 		stmt.close();
