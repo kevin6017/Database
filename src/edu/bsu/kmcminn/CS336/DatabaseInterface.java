@@ -9,13 +9,15 @@ import java.io.*;
 //import oracle.jdbc.OracleDriver;
 
 class DatabaseInterface {
-	public static String searchDB(String searchText) throws SQLException, IOException {
+	public static String searchDB(String searchText) throws SQLException,
+			IOException {
 		DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
 
 		String serverName = "csor12c.dhcp.bsu.edu";
 		String portNumber = "1521";
 		String sid = "or12cdb";
-		String url = "jdbc:oracle:thin:@" + serverName + ":" + portNumber + ":" + sid;
+		String url = "jdbc:oracle:thin:@" + serverName + ":" + portNumber + ":"
+				+ sid;
 		String queryText = searchText;
 		String results;
 
@@ -34,18 +36,24 @@ class DatabaseInterface {
 		results += "--------------------------------------------------------------------------- \n";
 
 		System.out.println("Table:");
-		System.out.println("---------------------------------------------------------------------------");
+		System.out
+				.println("---------------------------------------------------------------------------");
 		int i = 1;
-		while (i <= columNumber){
-			results += rsetmd.getColumnLabel(i) + "  ";
+		while (i <= columNumber) {
+			results += rsetmd.getColumnLabel(i) + " \t\t";
 			i++;
 		}
 		results += "\n";
 		while (rset.next()) {
-			i = 1; 
-			while(i <= columNumber){
-			results += rset.getString(i) + " ";
-			i++;
+			i = 1;
+			while (i <= columNumber) {
+				if (rsetmd.getColumnType(i) == Types.TIMESTAMP) {
+					results += rset.getDate(i)+ "\t\t";
+					i++;
+				} else {
+					results += rset.getString(i) + "\t\t";
+					i++;
+				}
 			}
 			results += "\n";
 		}
